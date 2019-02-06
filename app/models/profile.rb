@@ -5,6 +5,10 @@ class Profile < ActiveRecord::Base
   validates :gender, inclusion: { in: ["male", "female"] }
   validate :male_first_name_cannot_be_sue
 
+  def self.get_all_profiles(min_birth_year, max_birth_year)
+    where("birth_year BETWEEN ? AND ?", min_birth_year, max_birth_year).order(:birth_year)
+  end
+
   private
     def first_name_and_last_name_cannot_be_both_blank
       if first_name.blank? && last_name.blank?
